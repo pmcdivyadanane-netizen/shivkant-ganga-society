@@ -1,0 +1,174 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <div>
+
+            <h2 class="fw-bold text-primary">
+                Shivkant Ganga Society
+            </h2>
+
+            <p class="text-muted mb-0">
+                Administrator Dashboard
+            </p>
+
+        </div>
+
+        <div>
+
+            <a href="{{ url_for('home') }}" class="btn btn-secondary me-2">
+                Home
+            </a>
+
+            <a href="{{ url_for('logout') }}" class="btn btn-danger">
+                Logout
+            </a>
+
+        </div>
+
+    </div>
+
+    <div class="card shadow rounded-4 border-0 mb-4">
+
+        <div class="card-body p-4">
+
+            <h4 class="mb-3">
+                Upload Monthly Workbook
+            </h4>
+
+            <form method="POST"
+                  action="/upload"
+                  enctype="multipart/form-data">
+
+                <div class="mb-3">
+
+                    <input
+                        type="file"
+                        class="form-control"
+                        name="excel_file"
+                        accept=".xlsx"
+                        required>
+
+                </div>
+
+                <button
+                    class="btn btn-primary"
+                    type="submit">
+
+                    Upload Workbook
+
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+    <div class="card shadow rounded-4 border-0 mb-4">
+
+        <div class="card-body">
+
+            <h4 class="mb-3">
+                Current Workbook
+            </h4>
+
+            <table class="table">
+
+                <tr>
+
+                    <th width="220">
+                        Workbook
+                    </th>
+
+                    <td>
+
+                        {% if workbook %}
+
+                            {{ workbook }}
+
+                        {% else %}
+
+                            No workbook uploaded.
+
+                        {% endif %}
+
+                    </td>
+
+                </tr>
+
+                <tr>
+
+                    <th>
+                        Last Updated
+                    </th>
+
+                    <td>
+
+                        {% if last_updated %}
+
+                            {{ last_updated }}
+
+                        {% else %}
+
+                            -
+
+                        {% endif %}
+
+                    </td>
+
+                </tr>
+
+            </table>
+
+        </div>
+
+    </div>
+
+    <div class="card shadow rounded-4 border-0">
+
+        <div class="card-body">
+
+            <h4 class="mb-3">
+
+                Reports Available
+
+            </h4>
+
+            {% if sheets %}
+
+                <ul class="list-group">
+
+                    {% for sheet in sheets %}
+
+                    <li class="list-group-item">
+
+                        {{ sheet }}
+
+                    </li>
+
+                    {% endfor %}
+
+                </ul>
+
+            {% else %}
+
+                <div class="alert alert-info">
+
+                    No workbook uploaded yet.
+
+                </div>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
