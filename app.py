@@ -71,13 +71,14 @@ def home(sheet_name=None):
 
     reports = get_report_sheets()
 
-    if not reports:
-        return render_template(
-            "index.html",
-            reports=[],
-            selected_sheet=None,
-            sheet_data=[]
-        )
+if not reports:
+    return render_template(
+        "index.html",
+        reports=[],
+        selected_sheet=None,
+        sheet_data=[],
+        report_image=""
+    )
 
     if sheet_name is None:
         sheet_name = reports[0]
