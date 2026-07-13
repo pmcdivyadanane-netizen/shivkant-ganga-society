@@ -1,34 +1,139 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Shivkant Ganga Society</title>
+    <title>
+        {% block title %}
+        Shivkant Ganga Society
+        {% endblock %}
+    </title>
 
-    <!-- Bootstrap CSS -->
+    <!-- Bootstrap 5 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Bootstrap Icons -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
 
+    {% block head %}{% endblock %}
 </head>
 
 <body>
 
-{% block content %}
-{% endblock %}
+<!-- ================= HEADER ================= -->
+
+<nav class="navbar navbar-expand-lg navbar-dark shadow-sm top-navbar">
+
+    <div class="container-fluid px-4">
+
+        <a class="navbar-brand fw-bold d-flex align-items-center"
+           href="{{ url_for('home') }}">
+
+            <i class="bi bi-buildings-fill me-2 fs-3"></i>
+
+            <div>
+
+                <div class="brand-title">
+
+                    Shivkant Ganga Society
+
+                </div>
+
+                <small class="brand-subtitle">
+
+                    Dhanori, Pune-15
+
+                </small>
+
+            </div>
+
+        </a>
+
+
+        <div class="ms-auto">
+
+            {% if session.get('logged_in') %}
+
+                <a href="{{ url_for('dashboard') }}"
+                   class="btn btn-light px-4">
+
+                    <i class="bi bi-speedometer2"></i>
+
+                    Dashboard
+
+                </a>
+
+            {% else %}
+
+                <a href="{{ url_for('login') }}"
+                   class="btn btn-light px-4">
+
+                    <i class="bi bi-shield-lock-fill"></i>
+
+                    Admin Login
+
+                </a>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+</nav>
+
+<!-- ================= CONTENT ================= -->
+
+<div class="container-fluid mt-4">
+
+    {% block content %}
+
+    {% endblock %}
+
+</div>
+
+<!-- ================= FOOTER ================= -->
+
+<footer class="footer mt-5">
+
+    <div class="container text-center">
+
+        <div>
+
+            © 2026 Shivkant Ganga Society
+
+        </div>
+
+        <div class="developer">
+
+            Developed by Narendra Danane
+
+        </div>
+
+    </div>
+
+</footer>
+
+<!-- Bootstrap -->
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
 
-<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+<!-- Custom JS -->
+
+<script src="{{ url_for('static',
+filename='js/script.js') }}"></script>
+
+{% block scripts %}
+
+{% endblock %}
 
 </body>
-
 </html>

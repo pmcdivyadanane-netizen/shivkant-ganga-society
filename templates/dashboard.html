@@ -1,30 +1,29 @@
 {% extends "base.html" %}
 
+{% block title %}Dashboard{% endblock %}
+
 {% block content %}
 
-<div class="container py-5">
+<div class="container">
 
     <div class="d-flex justify-content-between align-items-center mb-4">
 
         <div>
-
-            <h2 class="fw-bold text-primary">
-                Shivkant Ganga Society
-            </h2>
-
+            <h2 class="fw-bold">Administrator Dashboard</h2>
             <p class="text-muted mb-0">
-                Administrator Dashboard
+                Upload the monthly Excel workbook to update the public website.
             </p>
-
         </div>
 
         <div>
 
-            <a href="{{ url_for('home') }}" class="btn btn-secondary me-2">
+            <a href="{{ url_for('home') }}" class="btn btn-secondary">
+                <i class="bi bi-house-fill"></i>
                 Home
             </a>
 
             <a href="{{ url_for('logout') }}" class="btn btn-danger">
+                <i class="bi bi-box-arrow-right"></i>
                 Logout
             </a>
 
@@ -32,140 +31,133 @@
 
     </div>
 
-    <div class="card shadow rounded-4 border-0 mb-4">
+    <!-- Flash Messages -->
 
-        <div class="card-body p-4">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
 
-            <h4 class="mb-3">
-                Upload Monthly Workbook
-            </h4>
+                <div class="alert alert-{{ category }} alert-dismissible fade show">
 
-            <form method="POST"
-                  action="/upload"
-                  enctype="multipart/form-data">
+                    {{ message }}
 
-                <div class="mb-3">
-
-                    <input
-                        type="file"
-                        class="form-control"
-                        name="excel_file"
-                        accept=".xlsx"
-                        required>
+                    <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="alert">
+                    </button>
 
                 </div>
 
-                <button
-                    class="btn btn-primary"
-                    type="submit">
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
 
-                    Upload Workbook
+    <!-- Upload Section -->
 
-                </button>
+    <div class="dashboard-card">
 
-            </form>
+        <h4 class="mb-3">
 
-        </div>
+            <i class="bi bi-upload"></i>
 
-    </div>
+            Upload Monthly Workbook
 
-    <div class="card shadow rounded-4 border-0 mb-4">
+        </h4>
 
-        <div class="card-body">
+<form
+    method="POST"
+    action="{{ url_for('upload_workbook') }}"
+    enctype="multipart/form-data">
 
-            <h4 class="mb-3">
-                Current Workbook
-            </h4>
+            <div class="mb-3">
 
-            <table class="table">
+<input
+    class="form-control"
+    type="file"
+    name="workbook"
+    accept=".xlsx"
+    required>
+            </div>
 
-                <tr>
+<button
+    class="btn btn-primary"
+    type="submit">
 
-                    <th width="220">
-                        Workbook
-                    </th>
+    Upload Workbook
 
-                    <td>
+</button>
 
-                        {% if workbook %}
+        </form>
 
-                            {{ workbook }}
-
-                        {% else %}
-
-                            No workbook uploaded.
-
-                        {% endif %}
-
-                    </td>
-
-                </tr>
-
-                <tr>
-
-                    <th>
-                        Last Updated
-                    </th>
-
-                    <td>
-
-                        {% if last_updated %}
-
-                            {{ last_updated }}
-
-                        {% else %}
-
-                            -
-
-                        {% endif %}
-
-                    </td>
-
-                </tr>
-
-            </table>
-
-        </div>
 
     </div>
 
-    <div class="card shadow rounded-4 border-0">
+    <!-- Current Workbook -->
 
-        <div class="card-body">
+    <div class="dashboard-card">
 
-            <h4 class="mb-3">
+        <h4>Current Workbook</h4>
 
-                Reports Available
+        <table class="table">
 
-            </h4>
+            <tr>
 
-            {% if sheets %}
+                <th width="200">
 
-                <ul class="list-group">
+                    Workbook
 
-                    {% for sheet in sheets %}
+                </th>
 
-                    <li class="list-group-item">
+                <td>
 
-                        {{ sheet }}
+                    monthly_report.xlsx
 
-                    </li>
+                </td>
 
-                    {% endfor %}
+            </tr>
 
-                </ul>
+            <tr>
 
-            {% else %}
+                <th>
 
-                <div class="alert alert-info">
+                    Status
 
-                    No workbook uploaded yet.
+                </th>
 
-                </div>
+                <td>
 
-            {% endif %}
+                    Ready
 
-        </div>
+                </td>
+
+            </tr>
+
+        </table>
+
+    </div>
+
+    <!-- Reports -->
+
+    <div class="dashboard-card">
+
+        <h4>
+
+            Reports Available
+
+        </h4>
+
+        <ul>
+
+            <li>Total Pending Final</li>
+            <li>June 2026</li>
+            <li>May 2026</li>
+            <li>April 2026</li>
+            <li>March 2026</li>
+            <li>February 2026</li>
+            <li>January 2026</li>
+
+        </ul>
 
     </div>
 

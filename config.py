@@ -6,8 +6,18 @@ load_dotenv()
 
 class Config:
 
-    SECRET_KEY = os.getenv("SECRET_KEY")
+    SECRET_KEY = os.getenv(
+        "SECRET_KEY",
+        "shivkant-ganga-secret"
+    )
 
-    ADMIN_EMAIL = os.getenv("ADMIN_EMAIL")
+    ADMIN_EMAIL = os.getenv(
+        "ADMIN_EMAIL"
+    )
 
-    ADMIN_PASSWORD = os.getenv("ADMIN_PASSWORD")
+    ADMIN_PASSWORD = os.getenv(
+        "ADMIN_PASSWORD"
+    )
+
+    UPLOAD_FOLDER = "uploads"
+    REPORT_FOLDER = "reports"

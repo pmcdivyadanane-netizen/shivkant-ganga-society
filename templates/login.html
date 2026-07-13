@@ -1,125 +1,106 @@
 {% extends "base.html" %}
 
+{% block title %}Admin Login{% endblock %}
+
 {% block content %}
 
 <div class="container">
 
-    <div class="row justify-content-center align-items-center vh-100">
+    <div class="login-card">
 
-        <div class="col-lg-5 col-md-7">
+        <h1>Shivkant Ganga Society</h1>
 
-            <div class="card shadow-lg border-0 rounded-4">
+        <h6>Administrator Login</h6>
 
-                <div class="card-body p-5">
+        <!-- Flash Messages -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
 
-                    <div class="text-center mb-4">
+                    <div class="alert alert-{{ category }} alert-dismissible fade show">
 
-                        <h2 class="fw-bold text-primary">
-                            Shivkant Ganga Society
-                        </h2>
+                        {{ message }}
 
-                        <p class="text-muted">
-                            Admin Login
-                        </p>
-
-                    </div>
-
-                    {% with messages = get_flashed_messages(with_categories=true) %}
-                    {% if messages %}
-
-                        {% for category, message in messages %}
-
-                        <div class="alert alert-{{ category }}">
-
-                            {{ message }}
-
-                        </div>
-
-                        {% endfor %}
-
-                    {% endif %}
-                    {% endwith %}
-
-                    <form method="POST">
-
-                        <div class="mb-3">
-
-                            <label class="form-label">
-
-                                Email Address
-
-                            </label>
-
-                            <input
-                                type="email"
-                                class="form-control"
-                                name="email"
-                                placeholder="Enter Email"
-                                required>
-
-                        </div>
-
-                        <div class="mb-4">
-
-                            <label class="form-label">
-
-                                Password
-
-                            </label>
-
-                            <input
-                                type="password"
-                                class="form-control"
-                                name="password"
-                                placeholder="Enter Password"
-                                required>
-
-                        </div>
-
-                        <div class="d-grid">
-
-                            <button
-                                type="submit"
-                                class="btn btn-primary btn-lg">
-
-                                Login
-
-                            </button>
-
-                        </div>
-
-                    </form>
-
-                    <hr class="my-4">
-
-                    <div class="text-center">
-
-                        <small class="text-muted">
-
-                            Forgot Password?
-
-                            <br>
-
-                            Please contact the developer.
-
-                        </small>
+                        <button type="button"
+                                class="btn-close"
+                                data-bs-dismiss="alert">
+                        </button>
 
                     </div>
 
-                    <div class="text-center mt-4">
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
 
-                        <a href="{{ url_for('home') }}"
-                           class="text-decoration-none">
+        <form method="POST">
 
-                            ← Back to Home
+            <div class="mb-3">
 
-                        </a>
+                <label class="form-label">
 
-                    </div>
+                    Email Address
 
-                </div>
+                </label>
+
+                <input
+                    type="email"
+                    class="form-control"
+                    name="email"
+                    placeholder="Enter Email"
+                    required>
 
             </div>
+
+            <div class="mb-4">
+
+                <label class="form-label">
+
+                    Password
+
+                </label>
+
+                <input
+                    type="password"
+                    class="form-control"
+                    name="password"
+                    placeholder="Enter Password"
+                    required>
+
+            </div>
+
+            <button
+                type="submit"
+                class="btn btn-primary w-100">
+
+                Login
+
+            </button>
+
+        </form>
+
+        <hr>
+
+        <div class="text-center">
+
+            <small class="text-muted">
+
+                Forgot Password?
+
+                <br>
+
+                Please contact the developer.
+
+            </small>
+
+        </div>
+
+        <div class="text-center mt-4">
+
+            <a href="{{ url_for('home') }}">
+
+                ← Back to Home
+
+            </a>
 
         </div>
 
