@@ -1,6 +1,15 @@
 import os
+from datetime import datetime
 
 REPORTS_FOLDER = os.path.join("static", "reports")
+
+
+def _report_sort_key(name):
+    """Parse 'Month YYYY' into a sortable date. Non-matching names sort last."""
+    try:
+        return datetime.strptime(name, "%B %Y")
+    except ValueError:
+        return datetime.min
 
 
 def get_report_sheets():
@@ -20,7 +29,7 @@ def get_report_sheets():
 
         reports.append(name)
 
-    reports.sort(reverse=True)
+    reports.sort(key=_report_sort_key, reverse=True)
 
     if "Total Pending Final" in reports:
         reports.remove("Total Pending Final")
