@@ -13,26 +13,28 @@ def _report_sort_key(name):
 
 
 def get_report_sheets():
-    """Return all report images as report names."""
-
-    if not os.path.exists(REPORTS_FOLDER):
-        return []
+    """Return all report images as report names, plus the static
+    'Total Pending Final' page which is rendered from a template
+    and does not need an image file."""
 
     reports = []
 
-    for file in os.listdir(REPORTS_FOLDER):
+    if os.path.exists(REPORTS_FOLDER):
 
-        if not file.lower().endswith(".png"):
-            continue
+        for file in os.listdir(REPORTS_FOLDER):
 
-        name = os.path.splitext(file)[0]
+            if not file.lower().endswith(".png"):
+                continue
 
-        reports.append(name)
+            name = os.path.splitext(file)[0]
+
+            reports.append(name)
 
     reports.sort(key=_report_sort_key, reverse=True)
 
     if "Total Pending Final" in reports:
         reports.remove("Total Pending Final")
-        reports.insert(0, "Total Pending Final")
+
+    reports.insert(0, "Total Pending Final")
 
     return reports
