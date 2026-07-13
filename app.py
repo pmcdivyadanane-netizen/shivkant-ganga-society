@@ -10,9 +10,12 @@ from flask import (
 
 from config import Config
 from excel_reader import get_report_sheets
-from excel_to_image import export_monthly_reports
+try:
+
+    from excel_to_image import export_monthly_reports
+except Exception:
+    export_monthly_reports = None
 import os
-from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
 app.config.from_object(Config)
@@ -155,7 +158,7 @@ def dashboard():
 
 
 # -------------------------------------------------
-# LOGOUT
+# UPLOAD WORKBOOK
 # -------------------------------------------------
 @app.route("/upload", methods=["POST"])
 def upload_workbook():
@@ -188,18 +191,34 @@ def upload_workbook():
     file.save(save_path)
 
     try:
-        export_monthly_reports()
-    except Exception as e:
-        flash(f"Image generation failed: {e}", "danger")
-        return redirect(url_for("dashboard"))
 
-    flash(
-        "Workbook uploaded successfully.",
-        "success"
-    )
+        if export_monthly_reports:
+            export_monthly_reports()
+
+            flash(
+                "Workbook uploaded and images generated successfully.",
+                "success"
+            )
+
+        else:
+
+            flash(
+                "Workbook uploaded successfully.",
+                "success"
+            )
+
+    except Exception:
+
+        flash(
+            "Workbook uploaded successfully. Image generation is not available on this server.",
+            "warning"
+        )
 
     return redirect(url_for("dashboard"))
 
+# -------------------------------------------------
+# LOGOUT
+# -------------------------------------------------
 @app.route("/logout")
 def logout():
 
@@ -211,7 +230,6 @@ def logout():
     )
 
     return redirect(url_for("home"))
-
 
 # -------------------------------------------------
 # START
